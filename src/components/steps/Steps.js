@@ -6,48 +6,29 @@ import WalkModel from '../../Models/WalkModel';
 
 function Steps(props) {
 
-    const [results, setResults] = useState([new WalkModel('22.10.2019', 1), new WalkModel('23.10.2019', 3)]);
+    const [results, setResults] = useState([new WalkModel('22.10.2019', 1), new WalkModel('2.10.2019', 11), new WalkModel('23.10.2018', 3) ]);
 
     const handleAdd = (walk) => {
-        // results.map(result => {
-        //     console.log(result)
-        //     if (result.date === walk.date) {
-        //         setResults(prevResults => [...prevResults, new WalkModel(
-        //             result.date,
-        //             parseFloat(result.distance) + parseFloat(walk.distance),
-        //             result.id,
-        //         )])
-        //     } else {
-        //         setResults(prevWalks => [...prevWalks, walk])
-        //     }
-        // })
 
-        // setResults(prevResults => prevResults.map(result =>
-        //     result.date === walk.date ? new WalkModel(result.date, parseFloat(result.distance) + parseFloat(walk.distance), result.id) : walk
-        // ));
-        // setResults(prevWalks => [...prevWalks, walk])
+        const compareFn = (a, b) => {
 
-        // setResults(prevResults => prevResults.map(result =>
-        //     result.date === walk.date ? result.distance = parseFloat(result.distance) + parseFloat(walk.distance) : setResults(prevWalks => [...prevWalks, walk])
-        // ));
+            const [aDay, aMonth, aYear] = a.date.split('.');
+            const [bDay, bMonth, bYear] = b.date.split('.');
 
+            const aDate = new Date(aYear, aMonth - 1, aDay);
+            const bDate = new Date(bYear, bMonth - 1, bDay);
 
-        // setResults(prevResults => prevResults.map(result => {
-        //     if (result.date === walk.date) {
-        //         return new WalkModel(result.date, parseFloat(result.distance) + parseFloat(walk.distance), result.id)
-        //     } else {
-        //         return result
-        //     }
-        // }
-        // ));
+            return aDate < bDate ? 1 : -1
+        }
 
-        setResults(prev => prev.map(result => {
-            if (result.date === walk.date) {
-                const distance = result.distance + Number.parseFloat(walk.distance);
-                return { ...result, distance };
+        setResults(prev => {
+            const index = prev.findIndex(o => o.date === walk.date);
+            if (index === -1) {
+                return [...prev, walk].sort(compareFn);
             }
-            return result;
-        }));
+
+            return prev.map(o => o.date === walk.date ? { ...o, distance: o.distance + Number.parseFloat(walk.distance) } : o);
+        });
 
     }
 
