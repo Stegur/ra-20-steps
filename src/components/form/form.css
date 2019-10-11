@@ -1,0 +1,45 @@
+.Form {
+    display: flex;
+    flex-flow: row wrap;
+
+    width: 600px;
+    padding: 0 15px;
+}
+
+.Form__column {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-end;
+}
+
+.Form__column:not(:last-child) {
+    margin-right: 15px;
+}
+
+.Form__lable {
+    margin-bottom: 15px;
+}
+
+.Form__field,
+.Form__btn {
+    box-sizing: border-box;
+
+    height: 40px;
+
+    border: 1.5px solid black;
+    border-radius: 8px;
+}
+
+.Form__field {
+    width: 150px;
+
+    padding: 3px 10px;
+}
+
+.Form__btn {
+    width: 70px;
+
+    background: transparent;
+
+    cursor: pointer;
+}
